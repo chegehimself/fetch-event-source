@@ -86,8 +86,9 @@ export function fetchEventSource(input: RequestInfo, {
         let retryInterval = DefaultRetryInterval;
         let retryTimer = 0;
         function dispose() {
-            document.removeEventListener('visibilitychange', onVisibilityChange);
-            self.clearTimeout(retryTimer);
+            if (!openWhenHidden) {
+                document.removeEventListener('visibilitychange', onVisibilityChange);
+            }            self.clearTimeout(retryTimer);
             curRequestController.abort();
         }
 
